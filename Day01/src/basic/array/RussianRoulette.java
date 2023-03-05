@@ -20,6 +20,7 @@ public class RussianRoulette {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("인원수 입력: 2~4명");
 		//게임인원 입력
+		int count = 0;
 		int player = sc.nextInt();
 		int hit;
 		String[] players = new String[player];
@@ -30,6 +31,8 @@ public class RussianRoulette {
 			//배열 하나 생성해서 플레이어들을 배치하면 된다.
 			//배열의 크기는 게임 참가자의 명수와 동일합니다.
 			players[i] = playerName;
+			count++;
+			
 
 		}
 		while(true) {
@@ -48,6 +51,7 @@ public class RussianRoulette {
 
 			}else {
 				System.out.println("최후의 1인이 누구일지 생각해보십시오!");
+				System.out.println("enter키를 누르세요");
 				break;
 			}
 
@@ -60,20 +64,49 @@ public class RussianRoulette {
 		in:for(int i=0; i<hit; i++) {
 			//난수를 생성하셔서 실탄을 탄창에 배치합니다.
 			int a = (int)(Math.random()*5);
-			
+
 			//난수는 중복으로 발생할 가능성이 있기 때문에 중복 방지 로직을 세워서
 			//같은 위치에 두개의 실탄이 장전되지 않도록 해 주시면 됩니다.
-				if(bulletPos[a] == true) {
+			if(bulletPos[a] == true) {
 				i--;
 				continue in;
 
 			}
-				//false -> true로 바꾸는 것이 실탄장전입니다.
+			//false -> true로 바꾸는 것이 실탄장전입니다.
 			bulletPos[a] = true;
+			sc.nextLine();
 		}
 		//실행순서 정하기
-		
-		
+
+		String[] nplayers = new String[count];
+
+		for(int i=0; i<bulletPos.length; i++) {
+			for(int j=0; j<players.length; j++) {
+				if(bulletPos[i] == true) {
+					System.out.println("빵!! " + players[j] + "가 죽었습니다.");
+					sc.nextLine();
+
+					System.out.println("남은사람은: ");
+					System.out.println(Arrays.toString(nplayers));
+					sc.nextLine();
+					break;
+				}else if(players[j].equals(0)) {
+					System.out.println("최후의 1인으로 남은 사람은 " + players[j] + " 입니다.");
+					break;					
+				}else {
+					System.out.println(players[j] + ": 휴 살았다!!" );
+					System.out.println("남은사람은: ");
+					System.out.println(Arrays.toString(nplayers));
+					sc.nextLine();
+					j--;
+					break;
+				}
+				
+				
+//				players[k] = nplayers[k-1];
+//				System.out.println(Arrays.toString(players));
+			}
+		}
 
 
 
@@ -113,7 +146,7 @@ public class RussianRoulette {
 
 
 	}
-	}
+}
 
 
 
